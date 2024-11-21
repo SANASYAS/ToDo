@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo List</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container" style="background-color: rgb(255, 225, 180);">
+        <h1 style="font-family: Garamond;">Today's - To Do List</h1>
+        <ul>
+            {% for todo in todos %}
+                <li>
+                    {{ todo.entry }}
+                    <a href="{% url 'delete' todo.id %}">Delete</a>
+                </li>
+            {% empty %}
+                <li style="font-family: Garamond;">Still you do not have any to-do items</li>
+            {% endfor %}
+        </ul>
+
+        <h2 style="font-family: Garamond;">Add a New Todo</h2>
+        <form method="post" action="{% url 'todoadd' %}">
+            {% csrf_token %}
+            <input type="text" name="entry" placeholder="Enter a new todo item" required>
+            <button type="submit" style="font-family: Garamond;">Add</button><br><br>
+        </form><br><br>
+        <div class="options">
+            <a href="{% url 'delete_all' %}" style="font-family: Garamond;">Delete All</a>
+        </div>
+    </div>
+</body>
+</html>
